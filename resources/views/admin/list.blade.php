@@ -1,16 +1,17 @@
 @extends('admin.main')
 
+@section('title', str_replace('_', ' ', ucfirst($tableName)))
+
 @section('content')
 
-    <div class="container">
         <br>
     @if(isset($error))
             <div class="alert alert-danger">
                 <strong>{{ $error['message'] }}</strong>
             </div>
-            <a style="margin-bottom: 50px" class="btn btn-primary btn-sm" href="{{ route('app.' . $tableName . '.create') }}">Create new {{substr($tableName, 0, -1)}}</a>
+            <a style="margin-bottom: 50px" class="btn btn-primary btn-sm" href="{{ route('app.' . $tableName . '.create') }}">Create new {{substr(str_replace('_', ' ', $tableName), 0, -1)}}</a>
             <br>
-            <a class="btn btn-warning btn-md float-right" href="http://atraskvr.dev/admin/">Admin home page</a>
+            {{--<a class="btn btn-warning btn-md float-right" href="http://atraskvr.dev/admin/">Admin home page</a>--}}
         @endif
         @if(!isset($error))
             @if(isset($comment))
@@ -23,8 +24,7 @@
                         <strong>{{ $message }}</strong>
                     </div>
                 @endif
-                    <h3>{{$tableName . ' list'}}</h3><br>
-                         <a style="margin-bottom: 50px" class="btn btn-primary btn-sm" href="{{ route('app.' . $tableName . '.create') }}">Create new {{substr($tableName, 0, -1)}}</a>
+                         <a style="margin-bottom: 50px" class="btn btn-primary btn-sm" href="{{ route('app.' . $tableName . '.create') }}">Create new {{str_replace('_', ' ',substr($tableName, 0, -1))}}</a>
                     <table class="table">
                 <thead>
                 <tr>
@@ -50,7 +50,6 @@
                 </tr>
                 </thead>
                 <tbody>
-
 
                 @foreach($list_data as $key => $record)
                     <tr id="{{$record['id']}}">
@@ -102,10 +101,7 @@
                 @endforeach
                 </tbody>
             </table>
-                    <br>
-                    <a class="btn btn-warning btn-md float-right" href="http://atraskvr.dev/admin/"><i class="fa fa-home fa-sm" aria-hidden="true"></i> Home</a>
         @endif
-    </div>
 
 @endsection
 

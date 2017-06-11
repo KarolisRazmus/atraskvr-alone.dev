@@ -13,7 +13,11 @@
             <li><a href="index2.html"><i class="fa fa-circle-o"></i> View</a></li>
         </ul>
     </li>
-    <li class="treeview">
+    <li class="treeview
+        @if($tableName == 'pages_categories')
+            active
+        @endif
+        ">
         <a href="#">
             <i class="fa fa-folder-open-o"></i> <span>Pages categories</span>
             <span class="pull-right-container">
@@ -21,7 +25,11 @@
             </span>
         </a>
     </li>
-    <li class="treeview">
+    <li class="treeview
+        @if($tableName == 'orders')
+            active
+        @endif
+        ">
         <a href="#">
             <i class="fa fa-language"></i> <span>Orders</span>
             <span class="pull-right-container">
