@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Traits\ConfigurationForBladeTrait;
 use App\Http\Traits\FillableTrait;
 use App\Http\Traits\TableNameTrait;
 use App\Http\Traits\UuidTrait;
@@ -20,5 +21,6 @@ class CoreModel extends Model
     use UuidTrait;
     use FillableTrait;
     use TableNameTrait;
+    use ConfigurationForBladeTrait;
 
 }

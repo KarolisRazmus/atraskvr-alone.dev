@@ -21,6 +21,5 @@ trait FillableTrait
             unset($this->fillable[0]);
         }
         return $this->fillable;
-
     }
 }
