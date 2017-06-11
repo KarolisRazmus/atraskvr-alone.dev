@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\VRCategoriesTranslations;
 use App\Models\VRLanguages;
 use App\Models\VRPagesCategories;
 use App\Models\VRPagesCategoriesTranslations;
@@ -21,17 +20,14 @@ class VRPagesCategoriesController extends Controller
      */
     public function adminIndex()
     {
-        $message = Session()->get('message');
-        $configuration['message'] = $message;
+        $configuration = (new VRPagesCategories())->getFillableAndTableName();
 
-        $dataFromModel = new VRPagesCategories();
-        $configuration['fields'] = $dataFromModel->getFillable();
-        $configuration['tableName'] = $dataFromModel->getTableName();
+        $configuration['message'] = Session()->get('message');
 
         $configuration['list_data'] = VRPagesCategories::get()->where('deleted_at', '=', null)->toArray();
 
         if ($configuration['list_data'] == []) {
-            $configuration['error'] = ['message' => trans("List is empty. Please create some " . $configuration['tableName'] . ", then check list again")];
+            $configuration['error'] = ['message' => trans("List is empty. Please create some " . str_replace('_', ' ', $configuration['tableName']) . ", then check list again")];
             return view('admin.list', $configuration);
         }
 
@@ -44,12 +40,9 @@ class VRPagesCategoriesController extends Controller
 
     public function adminCreate()
     {
-        $message = Session()->get('message');
-        $configuration['message'] = $message;
+        $configuration = (new VRPagesCategories())->getFillableAndTableName();
 
-        $dataFromModel = new VRPagesCategories();
-        $configuration['fields'] = $dataFromModel->getFillable();
-        $configuration['tableName'] = $dataFromModel->getTableName();
+        $configuration['message'] = Session()->get('message');
 
         return view('admin.createform', $configuration);
     }
@@ -58,9 +51,7 @@ class VRPagesCategoriesController extends Controller
     {
         $data = request()->all();
 
-        $dataFromModel = new VRPagesCategories();
-        $configuration['fields'] = $dataFromModel->getFillable();
-        $configuration['tableName'] = $dataFromModel->getTableName();
+        $configuration = (new VRPagesCategories())->getFillableAndTableName();
 
         $missingValues= '';
         foreach($configuration['fields'] as $key=> $value) {
@@ -83,9 +74,9 @@ class VRPagesCategoriesController extends Controller
 
     public function adminShow($id)
     {
-        $dataFromModel = new VRPagesCategories();
+        $configuration = (new VRPagesCategories())->getFillableAndTableName();
+
         $configuration['record'] = VRPagesCategories::find($id)->toArray();
-        $configuration['tableName'] = $dataFromModel->getTableName();
 
         $dataFromModel2 = new VRPagesCategoriesTranslations();
         $configuration['fields_translations'] = $dataFromModel2->getFillable();
@@ -104,9 +95,7 @@ class VRPagesCategoriesController extends Controller
 
     public function adminEdit($id)
     {
-        $dataFromModel = new VRPagesCategories();
-        $configuration['fields'] = $dataFromModel->getFillable();
-        $configuration['tableName'] = $dataFromModel->getTableName();
+        $configuration = (new VRPagesCategories())->getFillableAndTableName();
 
         $configuration['record'] = VRPagesCategories::find($id)->toArray();
 
@@ -116,10 +105,8 @@ class VRPagesCategoriesController extends Controller
     public function adminUpdate($id)
     {
         $data = request()->all();
-        dd($data);
-        $dataFromModel = new VRPagesCategories();
-        $configuration['fields'] = $dataFromModel->getFillable();
-        $configuration['tableName'] = $dataFromModel->getTableName();
+
+        $configuration = (new VRPagesCategories())->getFillableAndTableName();
 
         $missingValues= '';
         foreach($configuration['fields'] as $key=> $value) {
@@ -156,9 +143,11 @@ class VRPagesCategoriesController extends Controller
         {
             return json_encode(["success" => true, "id" => $id]);
 
-        }elseif (VRPagesCategories::destroy($id))
+        }else
+            if (VRPagesCategories::destroy($id))
         {
             return json_encode(["success" => true, "id" => $id]);
         }
     }
 }
+
