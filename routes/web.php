@@ -16,13 +16,12 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    return view('admin.main');
 });
 
 Route::get('/loginn', function () {
     return view('login');
 });
-
 
 
 
