@@ -20,7 +20,7 @@ class VRUploadController extends Controller
 
         $path = 'upload/' . date ("Y/m/d/");
 
-        $fileName = Carbon::now()->timestamp . '_' . $file->getClientOriginalName();
+        $fileName = Carbon::now()->timestamp . '_' . str_replace(' ', '_', $file->getClientOriginalName());
 
         $file->move(public_path($path), $fileName);
 
