@@ -26,6 +26,8 @@ class VRPagesCategoriesController extends Controller
 
         $configuration['list_data'] = VRPagesCategories::get()->where('deleted_at', '=', null)->toArray();
 
+        $configuration['categories'] = VRPagesCategories::all()->pluck('name', 'id')->toArray();
+
         if ($configuration['list_data'] == []) {
             $configuration['error'] = ['message' => trans("List is empty. Please create some " . str_replace('_', ' ', $configuration['tableName']) . ", then check list again")];
             return view('admin.list', $configuration);
@@ -42,6 +44,8 @@ class VRPagesCategoriesController extends Controller
     {
         $configuration = (new VRPagesCategories())->getFillableAndTableName();
 
+        $configuration['dropdown']['parent_id'] = VRPagesCategories::all()->pluck('name', 'id')->toArray();
+
         $configuration['message'] = Session()->get('message');
 
         return view('admin.createform', $configuration);
@@ -55,7 +59,8 @@ class VRPagesCategoriesController extends Controller
 
         $missingValues= '';
         foreach($configuration['fields'] as $key=> $value) {
-            if (!isset($data[$value])) {
+            if ($value == 'parent_id'){}
+            elseif (!isset($data[$value])) {
                 $missingValues = $missingValues . ' ' . $value . ',';
             }
         }
@@ -75,6 +80,7 @@ class VRPagesCategoriesController extends Controller
     public function adminShow($id)
     {
         $configuration = (new VRPagesCategories())->getFillableAndTableName();
+        $configuration['parent_id'] = VRPagesCategories::get()->where('id', '=', (VRPagesCategories::find($id)->parent_id))->pluck('name', 'id')->toArray();
 
         $configuration['record'] = VRPagesCategories::find($id)->toArray();
 
@@ -97,6 +103,8 @@ class VRPagesCategoriesController extends Controller
     {
         $configuration = (new VRPagesCategories())->getFillableAndTableName();
 
+        $configuration['dropdown']['parent_id'] = VRPagesCategories::all()->pluck('name', 'id')->toArray();
+
         $configuration['record'] = VRPagesCategories::find($id)->toArray();
 
         return view('admin.editform', $configuration);
@@ -110,7 +118,8 @@ class VRPagesCategoriesController extends Controller
 
         $missingValues= '';
         foreach($configuration['fields'] as $key=> $value) {
-            if (!isset($data[$value])) {
+            if ($value == 'parent_id'){}
+            elseif (!isset($data[$value])) {
                 $missingValues = $missingValues . ' ' . $value . ',';
             }
         }
@@ -143,8 +152,7 @@ class VRPagesCategoriesController extends Controller
         {
             return json_encode(["success" => true, "id" => $id]);
 
-        }else
-            if (VRPagesCategories::destroy($id))
+        }elseif (VRPagesCategories::destroy($id))
         {
             return json_encode(["success" => true, "id" => $id]);
         }
