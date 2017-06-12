@@ -22,17 +22,13 @@ class VRPagesController extends Controller
      */
     public function adminIndex()
     {
-        $message = Session()->get('message');
-        $configuration['message'] = $message;
+        $configuration = (new VRPages())->getFillableAndTableName();
 
-        $dataFromModel = new VRPages();
-        $configuration['fields'] = $dataFromModel->getFillable();
-        $configuration['tableName'] = $dataFromModel->getTableName();
+        $configuration['message'] = Session()->get('message');
 
         $configuration['list_data'] = VRPages::get()->where('deleted_at', '=', null)->toArray();
 
         $configuration['coverImages'] = VRResources::all()->pluck('path', 'id')->toArray();
-
 
         $configuration['categories'] = VRPagesCategories::all()->pluck('name', 'id')->toArray();
 
@@ -76,12 +72,9 @@ class VRPagesController extends Controller
 
     public function adminCreate()
     {
-        $message = Session()->get('message');
-        $configuration['message'] = $message;
+        $configuration = (new VRPages())->getFillableAndTableName();
 
-        $dataFromModel = new VRPages();
-        $configuration['fields'] = $dataFromModel->getFillable();
-        $configuration['tableName'] = $dataFromModel->getTableName();
+        $configuration['message'] = Session()->get('message');
 
         $configuration['dropdown']['pages_categories_id'] = VRPagesCategories::all()->pluck('name', 'id')->toArray();
         $configuration['dropdown']['cover_image_id'] = VRResources::all()->pluck('path', 'id')->toArray();
@@ -100,9 +93,8 @@ class VRPagesController extends Controller
             $data['cover_image_id'] = request()->file('image');
         }
 
-        $dataFromModel = new VRPages();
-        $configuration['fields'] = $dataFromModel->getFillable();
-        $configuration['tableName'] = $dataFromModel->getTableName();
+        $configuration = (new VRPages())->getFillableAndTableName();
+
         $configuration['dropdown']['pages_categories_id'] = VRPagesCategories::all()->pluck('name', 'id')->toArray();
         $configuration['dropdown']['cover_image_id'] = VRResources::all()->pluck('path', 'id')->toArray();
 
@@ -186,24 +178,21 @@ class VRPagesController extends Controller
             $configuration[ 'translationExist' ] = true;
         }
 
-
         return view('admin.single', $configuration);
     }
 
     public function adminEdit($id)
     {
-        $dataFromModel = new VRPages();
-        $configuration['fields'] = $dataFromModel->getFillable();
-        $configuration['tableName'] = $dataFromModel->getTableName();
+        $configuration = (new VRPages())->getFillableAndTableName();
 
         $configuration['record'] = VRPages::find($id)->toArray();
 
         $configuration['dropdown']['pages_categories_id'] = VRPagesCategories::all()->pluck('name', 'id')->toArray();
 
         $resourcesTable_id = VRPages::find($id)->cover_image_id;
-        $configuration['coverImage'] = VRResources::find($resourcesTable_id)->path;
-
-
+        if($resourcesTable_id != 0){
+            $configuration['coverImage'] = VRResources::find($resourcesTable_id)->path;
+        }
 
         return view('admin.editform', $configuration);
     }
@@ -212,9 +201,7 @@ class VRPagesController extends Controller
     {
         $data = request()->all();
 
-        $dataFromModel = new VRPages();
-        $configuration['fields'] = $dataFromModel->getFillable();
-        $configuration['tableName'] = $dataFromModel->getTableName();
+        $configuration = (new VRPages())->getFillableAndTableName();
 
         $missingValues = '';
 
