@@ -75,12 +75,15 @@
 
                             @foreach($fields as $key => $value)
                                 @if($key_data == $value and $key_data == 'cover_image_id')
+                                    @if($value_data != 0)
                                         <td><img style="width:70px" src={{asset($coverImages[$value_data])}}></td>
+                                    @else <td></td>
+                                    @endif
                                 @elseif($key_data == $value and $key_data == 'pages_categories_id')
                                     <td>{{$categories[$record['pages_categories_id']]}}</td>
                                 @elseif($key_data == $value and $key_data == 'parent_id')
                                     @if($record['parent_id'] != null)
-                                    <td>{{$menus[$record['parent_id']]}}</td>
+                                    <td>{{$categories[$record['parent_id']]}}</td>
                                     @else
                                         <td></td>
                                     @endif

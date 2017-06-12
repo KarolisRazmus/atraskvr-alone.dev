@@ -4,7 +4,7 @@
 
 @section('content')
 
-        <h3>
+        <h4>
             @if(isset($record['name']))
                 @if($record['name']!= null)
                     @if(isset($record['name']))
@@ -18,7 +18,7 @@
                 @endif
             @endif
 
-        </h3><br>
+        </h4><br>
         <table class="table">
             <thead class="thead-default">
             <tr>
@@ -116,7 +116,7 @@
         @endif
 
         @if(isset($translationExist))
-            <h3>
+            <h4>
                 @if($translations != null)
                     @if(isset($record['name']))
                         {{ucfirst($record['name'] . ' translations')}}
@@ -127,7 +127,7 @@
                         @endif
                     @endif
                 @endif
-            </h3><br>
+            </h4><br>
             <table class="table">
                 <tbody>
                 @foreach($translations as $translation)
