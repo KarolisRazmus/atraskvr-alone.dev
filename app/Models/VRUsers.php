@@ -3,6 +3,7 @@
 namespace App\Models;
 
 
+use App\Http\Traits\ConfigurationForBladeTrait;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Ramsey\Uuid\Uuid;
@@ -14,6 +15,8 @@ class VRUsers extends Authenticatable
     use Notifiable;
 
     use SoftDeletes;
+
+    use ConfigurationForBladeTrait;
 
     protected $table = 'vr_users';
 
