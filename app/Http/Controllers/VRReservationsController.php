@@ -22,12 +22,10 @@ class VRReservationsController extends Controller
      */
     public function adminIndex()
     {
-        $message = Session()->get('message');
-        $configuration['message'] = $message;
+        $configuration = (new VRReservations())->getFillableAndTableName();
+        array_unshift($configuration['fields'], 'id');
 
-        $dataFromModel = new VRReservations();
-        $configuration['fields'] = $dataFromModel->getFillable();
-        $configuration['tableName'] = $dataFromModel->getTableName();
+        $configuration['message'] = Session()->get('message');
 
         $configuration['list_data'] = VRReservations::get()->where('deleted_at', '=', null)->toArray();
 
@@ -42,13 +40,6 @@ class VRReservationsController extends Controller
 
         return view('admin.list', $configuration);
     }
-
-
-
-
-
-
-
 
     private function generateDateRange(Carbon $start_date, Carbon $end_date, $addWhat, $value, $dateFormat)
     {
@@ -65,11 +56,8 @@ class VRReservationsController extends Controller
     public function adminCreate($date = null, $message = null)
     {
 
-
-
         if ($date == null)
             $date = Carbon::today()->toDateString();
-
 
 
 
@@ -78,7 +66,6 @@ class VRReservationsController extends Controller
 
         $startTime2 = Carbon::today()->addHours(11);
         $endTime2 = Carbon::today()->addHour(22);
-
 
 
 
@@ -106,8 +93,6 @@ class VRReservationsController extends Controller
 
 
 
-
-
         $configuration['message'] = $message;
         $configuration['date_from_url'] = $date;
         $configuration['times'] = $this->generateDateRange($startTime, $endTime, 'addMinutes', 10, 'H:i');
@@ -124,6 +109,7 @@ class VRReservationsController extends Controller
 
 
     }
+
 
     public function adminStore()
     {

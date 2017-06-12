@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Route;
 
 class VROrdersController extends Controller
 {
-
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      *
@@ -16,12 +15,10 @@ class VROrdersController extends Controller
      */
     public function adminIndex()
     {
-        $message = Session()->get('message');
-        $configuration['message'] = $message;
+        $configuration = (new VROrders())->getFillableAndTableName();
+        array_unshift($configuration['fields'], 'id');
 
-        $dataFromModel = new VROrders();
-        $configuration['fields'] = $dataFromModel->getFillable();
-        $configuration['tableName'] = $dataFromModel->getTableName();
+        $configuration['message'] = Session()->get('message');
 
         $configuration['list_data'] = VROrders::get()->where('deleted_at', '=', null)->toArray();
 
@@ -44,12 +41,9 @@ class VROrdersController extends Controller
      */
     public function adminCreate()
     {
-        $message = Session()->get('message');
-        $configuration['message'] = $message;
+        $configuration = (new VROrders())->getFillableAndTableName();
 
-        $dataFromModel = new VROrders();
-        $configuration['fields'] = $dataFromModel->getFillable();
-        $configuration['tableName'] = $dataFromModel->getTableName();
+        $configuration['message'] = Session()->get('message');
 
         $configuration['enum_dropDown'] = [
             "label" => trans('status'),
@@ -68,9 +62,7 @@ class VROrdersController extends Controller
     {
         $data = request()->all();
 
-        $dataFromModel = new VROrders();
-        $configuration['fields'] = $dataFromModel->getFillable();
-        $configuration['tableName'] = $dataFromModel->getTableName();
+        $configuration = (new VROrders())->getFillableAndTableName();
 
         $missingValues= '';
         foreach($configuration['fields'] as $key=> $value) {
@@ -102,7 +94,6 @@ class VROrdersController extends Controller
         $dataFromModel = new VROrders();
         $configuration['record'] = VROrders::find($id)->toArray();
         $configuration['tableName'] = $dataFromModel->getTableName();
-        $configuration['translations'] = [];
 
         return view('admin.single', $configuration);
     }
@@ -115,9 +106,7 @@ class VROrdersController extends Controller
      */
     public function adminEdit($id)
     {
-        $dataFromModel = new VROrders();
-        $configuration['fields'] = $dataFromModel->getFillable();
-        $configuration['tableName'] = $dataFromModel->getTableName();
+        $configuration = (new VROrders())->getFillableAndTableName();
 
         $configuration['record'] = VROrders::find($id)->toArray();
 
@@ -139,9 +128,7 @@ class VROrdersController extends Controller
     {
         $data = request()->all();
 
-        $dataFromModel = new VROrders();
-        $configuration['fields'] = $dataFromModel->getFillable();
-        $configuration['tableName'] = $dataFromModel->getTableName();
+        $configuration = (new VROrders())->getFillableAndTableName();
 
         $missingValues = '';
         foreach ($configuration['fields'] as $key => $value) {
@@ -156,9 +143,7 @@ class VROrdersController extends Controller
             return view('admin.editform', $configuration);
         }
 
-        $record = VROrders::find($id);
-
-        $record->update($data);
+        VROrders::find($id)->update($data);
 
         $message = ['message' => trans('Record updated successfully')];
 
@@ -173,3 +158,4 @@ class VROrdersController extends Controller
         }
     }
 }
+
