@@ -26,8 +26,8 @@ class PagesSeeder extends Seeder
                 ["id" => Uuid::uuid4(), "name" => "Hurl", "pages_categories_id" => "vr_categories_id"],
                 ["id" => Uuid::uuid4(), "name" => "Final goalie: football simulator", "pages_categories_id" => "vr_categories_id"],
                 ["id" => Uuid::uuid4(), "name" => "Project cars", "pages_categories_id" => "vr_categories_id"],
-
             ];
+
             DB::beginTransaction();
             try {
                 foreach ($list as $single) {
