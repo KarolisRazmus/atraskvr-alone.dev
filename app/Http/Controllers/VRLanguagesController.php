@@ -18,12 +18,9 @@ class VRLanguagesController extends Controller
      */
     public function adminIndex()
     {
-        $message = Session()->get('message');
-        $configuration['message'] = $message;
+        $configuration = (new VRLanguages())->getFillableAndTableName();
 
-        $dataFromModel = new VRLanguages();
-        $configuration['fields'] = $dataFromModel->getFillable();
-        $configuration['tableName'] = $dataFromModel->getTableName();
+        $configuration['message'] = Session()->get('message');
 
         $configuration['list_data'] = VRLanguages::get()->where('deleted_at', '=', null)->toArray();
 
@@ -41,12 +38,9 @@ class VRLanguagesController extends Controller
 
     public function adminCreate()
     {
-        $message = Session()->get('message');
-        $configuration['message'] = $message;
+        $configuration = (new VRLanguages())->getFillableAndTableName();
 
-        $dataFromModel = new VRLanguages();
-        $configuration['fields'] = $dataFromModel->getFillable();
-        $configuration['tableName'] = $dataFromModel->getTableName();
+        $configuration['message'] = Session()->get('message');
 
         return view('admin.createform', $configuration);
     }
@@ -55,9 +49,7 @@ class VRLanguagesController extends Controller
     {
         $data = request()->all();
 
-        $dataFromModel = new VRLanguages();
-        $configuration['fields'] = $dataFromModel->getFillable();
-        $configuration['tableName'] = $dataFromModel->getTableName();
+        $configuration = (new VRLanguages())->getFillableAndTableName();
 
         $missingValues= '';
         foreach($configuration['fields'] as $key=> $value) {
@@ -93,9 +85,7 @@ class VRLanguagesController extends Controller
 
     public function adminEdit($id)
     {
-        $dataFromModel = new VRLanguages();
-        $configuration['fields'] = $dataFromModel->getFillable();
-        $configuration['tableName'] = $dataFromModel->getTableName();
+        $configuration = (new VRLanguages())->getFillableAndTableName();
 
         $configuration['record'] = VRLanguages::find($id)->toArray();
 
@@ -106,9 +96,7 @@ class VRLanguagesController extends Controller
     {
         $data = request()->all();
 
-        $dataFromModel = new VRLanguages();
-        $configuration['fields'] = $dataFromModel->getFillable();
-        $configuration['tableName'] = $dataFromModel->getTableName();
+        $configuration = (new VRLanguages())->getFillableAndTableName();
 
         $missingValues= '';
         foreach($configuration['fields'] as $key=> $value) {
