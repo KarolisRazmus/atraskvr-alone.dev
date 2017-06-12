@@ -77,4 +77,16 @@
             </span>
         </a>
     </li>
+    <li class="treeview
+        @if($tableName == 'resources')
+            active
+        @endif
+            ">
+        <a href="{{route('app.resources.index')}}">
+            <i class="fa fa-database"></i> <span>Resources</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+    </li>
 </ul>

@@ -4,17 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Models\VRResources;
 
-class VRResourceController extends Controller
+class VRResourcesController extends Controller
 {
 
     public function adminIndex()
     {
         $resources['list_data'] = VRResources::get()->toArray();
 
-        $modelData = new VRResources();
+        $dataFromModel = new VRResources();
         $configuration['tableName'] = 'resources';
         $configuration['id'] = VRResources::get()->pluck('id', 'id');
-        $configuration['fields'] = $modelData->getFillable();
+        $configuration['fields'] = $dataFromModel->getFillable();
 
         return view('admin.list', $configuration, $resources);
 
@@ -70,6 +70,25 @@ class VRResourceController extends Controller
 
         return view('admin.single', $configuration);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     public function adminEdit($id)
     {

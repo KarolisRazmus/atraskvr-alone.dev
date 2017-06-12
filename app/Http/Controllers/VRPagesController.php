@@ -133,7 +133,7 @@ class VRPagesController extends Controller
         }
             $allData = VRPages::create($data)->toArray();
 
-        $resourceStore = new VRResourceController();
+        $resourceStore = new VRResourcesController();
         $resource_id = $resourceStore->getResourceStore($allData);
 
         foreach($resource_id as $id) {
