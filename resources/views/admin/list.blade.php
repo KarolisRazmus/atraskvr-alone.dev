@@ -11,7 +11,6 @@
             </div>
             <a style="margin-bottom: 50px" class="btn btn-primary btn-sm" href="{{ route('app.' . $tableName . '.create') }}">Create new {{substr(str_replace('_', ' ', $tableName), 0, -1)}}</a>
             <br>
-            {{--<a class="btn btn-warning btn-md float-right" href="http://atraskvr.dev/admin/">Admin home page</a>--}}
         @endif
         @if(!isset($error))
             @if(isset($comment))
@@ -25,7 +24,7 @@
                     </div>
                 @endif
                          <a style="margin-bottom: 50px" class="btn btn-primary btn-sm" href="{{ route('app.' . $tableName . '.create') }}">Create new {{str_replace('_', ' ',substr($tableName, 0, -1))}}</a>
-                    <table class="table">
+            <table class="table table-hover">
                 <thead>
                 <tr>
                     @foreach($fields as $key => $value)
@@ -69,15 +68,14 @@
                                 </td>
                             @endif
                         @endif
-
 {{--dinamic data display --}}
                         @foreach($record as $key_data => $value_data)
 
                             @foreach($fields as $key => $value)
                                 @if($key_data == $value and $key_data == 'cover_image_id')
-                                    @if($value_data != 0)
+                                    @if($value_data)
                                         <td><img style="width:70px" src={{asset($coverImages[$value_data])}}></td>
-                                    @else <td></td>
+                                    @else <td><img style="width:70px" src="{{asset('upload\2017\06\12\1497265977_no-image-box.png') }}"></td>
                                     @endif
                                 @elseif($key_data == $value and $key_data == 'pages_categories_id')
                                     <td>{{$categories[$record['pages_categories_id']]}}</td>
@@ -99,7 +97,7 @@
                             @endif
                         <td><a class="btn btn-primary btn-sm" href="{{route('app.' . $tableName . '.show', $record['id'])}}"><i class="fa fa-eye fa-sm" aria-hidden="true"></i> View</a></td>
                         <td><a class="btn btn-success btn-sm" href="{{route('app.' . $tableName . '.edit', $record['id'])}}"><i class="fa fa-pencil fa-sm" aria-hidden="true"></i> Edit</a></td>
-                        <td><a href="" id="del" onclick="deleteItem('{{route('app.' . $tableName . '.delete', $record['id'])}}')" class="btn btn-danger btn-sm"><i class="fa fa-trash-o fa-sm"></i> Delete</a></td>
+                        <td><a id="del" onclick="deleteItem('{{route('app.' . $tableName . '.delete', $record['id'])}}')" class="btn btn-danger btn-sm"><i class="fa fa-trash-o fa-sm"></i> Delete</a></td>
                     </tr>
                 @endforeach
                 </tbody>
@@ -126,6 +124,7 @@
                 data: {},
                 dataType: 'json',
                 success: function (r) {
+
                    $("#" + r.id).remove();
 
                 },
