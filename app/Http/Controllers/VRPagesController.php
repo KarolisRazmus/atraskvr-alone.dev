@@ -44,35 +44,11 @@ class VRPagesController extends Controller
         return view('admin.list', $configuration);
     }
 
-//function to pull connected files from pages_resources_connections
-    public function mediaFiles($id)
-    {
-        $config['mediaFilesShow'] = VRpages::with('resourceImage','pagesConnectedImages')->where('id', '=', $id)->get()->toArray();
-        if(isset($config['mediaFilesShow']))
-        {
-            foreach($config['mediaFilesShow'] as $mediaFiles)
-            {
-                foreach($mediaFiles['pages_connected_images'] as $mediaFile)
-                {
-                    $connectedMediaData[] = $mediaFile['resources_connected_images'];
-                    $config['connectedMediaData'] = $connectedMediaData;
-                    if($mediaFile['resources_connected_images']['mime_type'] == "image/jpeg" || "image/png")
-                    {
-                        $config['image'][] = $mediaFile['resources_connected_images']['path'];
-                    }
-                    if($mediaFile['resources_connected_images']['mime_type'] == "video/mp4")
-                    {
-                        $config['video'][] = $mediaFile['resources_connected_images']['path'];
-                    }
-                }
-            }
-        }
-        return $config;
-    }
-
     public function adminCreate()
     {
         $configuration = (new VRPages())->getFillableAndTableName();
+
+        array_push($configuration['fields'],"files");
 
         $configuration['message'] = Session()->get('message');
 
@@ -84,64 +60,52 @@ class VRPagesController extends Controller
 
     public function adminStore()
     {
-
         $data = request()->all();
-//        dd($data);
-
-        if (request()->image != null)
-        {
-            $data['cover_image_id'] = request()->file('image');
-        }
 
         $configuration = (new VRPages())->getFillableAndTableName();
+        array_push($configuration['fields'], "files");
 
         $configuration['dropdown']['pages_categories_id'] = VRPagesCategories::all()->pluck('name', 'id')->toArray();
         $configuration['dropdown']['cover_image_id'] = VRResources::all()->pluck('path', 'id')->toArray();
 
         $missingValues = '';
-
-        foreach ($configuration['fields'] as $key => $value)
-        {
-            if ($value == 'pages_categories_id')
-            {}
-
-            elseif (!isset($data['cover_image_id']))
-            {
-                $missingValues = 'Please add cover image' . ',';
-            }
-
-            elseif (!isset($data[$value]))
-            {
+        foreach ($configuration['fields'] as $key => $value) {
+            if ($value == 'name' and $data['name'] == null) {
                 $missingValues = $missingValues . ' ' . $value . ',';
-            }
+            } else {}
         }
 
-        if ($missingValues != '')
-        {
-            $missingValues = substr($missingValues, 0, -1);
-            $configuration['error'] = ['message' => trans($missingValues)];
+        if ($missingValues != '') {
+            $missingValues = substr($missingValues, 1, -1);
+            $configuration['error'] = ['message' => trans('Please enter ' . $missingValues)];
             return view('admin.createform', $configuration);
         }
 
-//      Create cover id from uploading from windows directory
-        if (request()->image != null)
-        {
-            $newVRResourcesController = new VRUploadController();
-            $record = $newVRResourcesController->upload($data['image'], null);
+        if (request()->cover_image_id != null) {
+
+            $record = (new VRUploadController())->upload($data['cover_image_id'], null);
             $data['cover_image_id'] = $record->id;
-          
         }
-            $allData = VRPages::create($data)->toArray();
 
-        $resourceStore = new VRResourcesController();
-        $resource_id = $resourceStore->getResourceStore($allData);
+        $pageData = VRPages::create($data)->toArray();
 
-        foreach($resource_id as $id) {
+        if (request()->files != null)
+        {
+            $resourcesId = [];
 
-            VRPagesResourcesConnections::create([
-                'pages_id' => $allData['id'],
-                'resources_id' => $id
-            ]);
+            foreach ($data['files'] as $resource) {
+
+                    $record = (new VRUploadController())->upload($resource, null);
+                    $resourcesId[] = $record->id;
+            }
+
+            foreach($resourcesId as $id) {
+
+                VRPagesResourcesConnections::create([
+                    'pages_id' => $pageData['id'],
+                    'resources_id' => $id
+                ]);
+            }
         }
 
         $message = ['message' => trans('Record added successfully')];
