@@ -9,7 +9,12 @@
             <div class="alert alert-danger">
                 <strong>{{ $error['message'] }}</strong>
             </div>
-            <a style="margin-bottom: 50px" class="btn btn-primary btn-sm" href="{{ route('app.' . $tableName . '.create') }}">Create new {{substr(str_replace('_', ' ', $tableName), 0, -1)}}</a>
+            <a style="margin-bottom: 50px" class="btn btn-primary btn-sm" href="{{ route('app.' . $tableName . '.create') }}">Create new
+                @if(substr($tableName, -3) == 'ies')
+                    {{substr(str_replace('_', ' ',$tableName), 0, -3).'y'}}
+                @else
+                    {{substr(str_replace('_', ' ',$tableName), 0, -1)}}
+                @endif            </a>
             <br>
         @endif
         @if(!isset($error))
@@ -23,13 +28,22 @@
                         <strong>{{ $message }}</strong>
                     </div>
                 @endif
-                         <a style="margin-bottom: 50px" class="btn btn-primary btn-sm" href="{{ route('app.' . $tableName . '.create') }}">Create new {{str_replace('_', ' ',substr($tableName, 0, -1))}}</a>
+                         <a style="margin-bottom: 50px" class="btn btn-primary btn-sm" href="{{ route('app.' . $tableName . '.create') }}">Create new
+                             @if(substr($tableName, -3) == 'ies')
+                                 {{substr(str_replace('_', ' ',$tableName), 0, -3).'y'}}
+                             @else
+                                 {{substr(str_replace('_', ' ',$tableName), 0, -1)}}
+                             @endif                         </a>
             <table class="table table-hover">
                 <thead>
                 <tr>
                     @foreach($fields as $key => $value)
-
-                        @if($value == 'cover_image_id' and $tableName == 'pages')
+                        @if($value == 'mime_type')
+                            <th>mime type</th>
+                        @elseif($value == 'path' and $tableName == 'resources')
+                            <th>file</th>
+                            <th>{{$value}}</th>
+                        @elseif($value == 'cover_image_id' and $tableName == 'pages')
                             <th>cover image</th>
                         @elseif($value == 'pages_categories_id' and $tableName == 'pages')
                             <th>pages category</th>
@@ -38,12 +52,13 @@
                         @else
                             <th>{{$value}}</th>
                         @endif
-
                     @endforeach
                         @if(isset($translationExist))
                             <th>Translate</th>
                         @endif
+                        @if($tableName != 'resources')
                     <th>View</th>
+                        @endif
                     <th>Edit</th>
                     <th>Delete</th>
                 </tr>
@@ -53,26 +68,19 @@
                 @foreach($list_data as $key => $record)
                     <tr id="{{$record['id']}}">
 
-{{--display media--}}
-                        @if(array_key_exists ('path', $record))
-                            @if($record['mime_type'] == "image/jpeg" || $record['mime_type'] == "png")
-                                <td>
-                                    <a href="#"><img src="{{URL::asset($record['path'])}}" alt="Forest" width="80" height="150"/></a>
-                                </td>
-                            @endif
-                            @if($record['mime_type'] == "video/mp4")
-                                <td class="embed-responsive embed-responsive-4by3" style="width:80px; height:150px">
-                                    <video controls preload="none">
-                                        <source src="{{URL::asset($record['path'])}}"><source>
-                                    </video>
-                                </td>
-                            @endif
-                        @endif
-{{--dinamic data display --}}
                         @foreach($record as $key_data => $value_data)
 
                             @foreach($fields as $key => $value)
-                                @if($key_data == $value and $key_data == 'cover_image_id')
+
+                                @if($key_data == $value and $key_data == 'mime_type')
+                                    <td>{{$record[$key_data]}}</td>
+                                @elseif($key_data == $value and $key_data == 'path')
+                                    @if($value_data)
+                                        <td><img style="width:70px" src={{asset($record[$key_data])}}></td>
+                                    @else <td><img style="width:70px" src="{{asset('upload\2017\06\12\1497265977_no-image-box.png') }}"></td>
+                                    @endif
+                                    <td>{{$value_data}}</td>
+                                @elseif($key_data == $value and $key_data == 'cover_image_id')
                                     @if($value_data)
                                         <td><img style="width:70px" src={{asset($coverImages[$value_data])}}></td>
                                     @else <td><img style="width:70px" src="{{asset('upload\2017\06\12\1497265977_no-image-box.png') }}"></td>
@@ -86,18 +94,18 @@
                                         <td></td>
                                     @endif
                                 @elseif($key_data == $value)
-
                                        <td>{{$value_data}}</td>
-
                                 @endif
                             @endforeach
                         @endforeach
                             @if(isset($translationExist))
                             <td><a class="btn btn-info btn-sm" href="{{route('app.' . $tableName . '_translations.create', $record['id'])}}"><i class="fa fa-flag fm-sm" aria-hidden="true"></i> Translate</a></td>
                             @endif
-                        <td><a class="btn btn-primary btn-sm" href="{{route('app.' . $tableName . '.show', $record['id'])}}"><i class="fa fa-eye fa-sm" aria-hidden="true"></i> View</a></td>
-                        <td><a class="btn btn-success btn-sm" href="{{route('app.' . $tableName . '.edit', $record['id'])}}"><i class="fa fa-pencil fa-sm" aria-hidden="true"></i> Edit</a></td>
-                        <td><a id="del" onclick="deleteItem('{{route('app.' . $tableName . '.delete', $record['id'])}}')" class="btn btn-danger btn-sm"><i class="fa fa-trash-o fa-sm"></i> Delete</a></td>
+                            <td><a class="btn btn-primary btn-sm" href="{{route('app.' . $tableName . '.show', $record['id'])}}"><i class="fa fa-eye fa-sm" aria-hidden="true"></i> View</a></td>
+                            @if($tableName != 'resources')
+                            <td><a class="btn btn-success btn-sm" href="{{route('app.' . $tableName . '.edit', $record['id'])}}"><i class="fa fa-pencil fa-sm" aria-hidden="true"></i> Edit</a></td>
+                            @endif
+                            <td><a id="del" onclick="deleteItem('{{route('app.' . $tableName . '.delete', $record['id'])}}')" class="btn btn-danger btn-sm"><i class="fa fa-trash-o fa-sm"></i> Delete</a></td>
                     </tr>
                 @endforeach
                 </tbody>

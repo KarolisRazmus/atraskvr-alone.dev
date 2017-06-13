@@ -30,28 +30,29 @@
 
             @foreach($record as $key => $value)
                 <tr id="{{$record['id']}}">
-                    {{--Single Record and single page cover image display--}}
-                    @if(($key == 'cover_image_id' && $tableName == 'pages') || ($key == "mime_type" && $tableName == 'resources'))
-                        @if($mediaInfo['mime_type'] == "image/jpeg" ||$mediaInfo['mime_type'] == "png")
-                            <td>{{$key}}</td>
-                            <td>{{$value}}</td>
-                            <tr>
-                                <td>Image</td>
-                                <td><img src="{{asset($image)}}"></td>
-                            </tr>
-                        @elseif($mediaInfo['mime_type'] == "video/mp4")
-                            <td>Video</td>
-                            <td class="embed-responsive embed-responsive-4by3">
-                                <video controls preload="none">
-                                    <source src="{{asset($record['path'])}}">
-                                </video>
-                            </td>
-                        @endif
+                    @if($key == 'path')
+                        <td>cover image</td>
+                        <td><img src="{{asset($value)}}"></td>
+                    </tr>
+                <tr>
+                    <td>{{$key}}</td>
+                    <td>{{$value}}</td>
+                </tr>
+
+
+                        {{--@elseif($mediaInfo['mime_type'] == "video/mp4")--}}
+                            {{--<td>Video</td>--}}
+                            {{--<td class="embed-responsive embed-responsive-4by3">--}}
+                                {{--<video controls preload="none">--}}
+                                    {{--<source src="{{asset($record['path'])}}">--}}
+                                {{--</video>--}}
+                            {{--</td>--}}
+                        {{--@endif--}}
 
 
                     {{--@if($key == 'cover_image_id' and $tableName == 'pages')--}}
                     {{--<td>cover image</td>--}}
-                    {{--<td><img src={{asset($image)}}/></td>--}}
+                    {{--<td><img src={{asset($value)}}/></td>--}}
 
                     @elseif($key == 'pages_categories_id')
                         <td>pages category</td>
@@ -152,7 +153,9 @@
                 </tbody>
             </table>
         @endif
-        <a class="btn btn-success btn-sm" href="{{route('app.' . $tableName . '.edit', $record['id'])}}">Edit</a>
+        @if($tableName != 'resources')
+            <td><a class="btn btn-success btn-sm" href="{{route('app.' . $tableName . '.edit', $record['id'])}}"><i class="fa fa-pencil fa-sm" aria-hidden="true"></i> Edit</a></td>
+        @endif
         <a class="btn btn-sm btn-primary" href="{{route('app.' . $tableName . '.index')}}">{{str_replace('_', ' ', ucfirst($tableName))}} list</a>
     <br><br>
 
