@@ -60,7 +60,7 @@
                         {!! Form::label('images', 'Upload files:' ) !!}<br>
                         {!! Form::file('files[]', array('multiple'=>true)) !!}<br/>
                     </div>
-                    @if($field == 'files')
+                    @if($field == 'files' and $record['resources_connections'] != [])
                         @if(isset($checkbox[$field]))
                         {!! Form::label($field, 'Pick ' . $field . ' witch you want to delete from page:') !!}<br/><br>
 
