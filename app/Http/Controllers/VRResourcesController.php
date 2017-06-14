@@ -23,7 +23,7 @@ class VRResourcesController extends Controller
         return view('admin.list', $configuration);
     }
 
-    protected function adminCreate()
+    public function adminCreate()
     {
         $configuration = (new VRResources())->getFillableAndTableName();
 
@@ -32,7 +32,7 @@ class VRResourcesController extends Controller
         return view('admin.createform', $configuration);
     }
 
-    protected function adminStore()
+    public function adminStore()
     {
         $data = request()->file('files');
 
