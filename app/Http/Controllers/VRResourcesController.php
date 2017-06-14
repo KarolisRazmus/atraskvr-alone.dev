@@ -25,11 +25,11 @@ class VRResourcesController extends Controller
 
     public function adminCreate()
     {
-        $configuration = (new VRResources())->getFillableAndTableName();
-
-        $configuration['message'] = Session()->get('message');
-
-        return view('admin.createform', $configuration);
+//        $configuration = (new VRResources())->getFillableAndTableName();
+//
+//        $configuration['message'] = Session()->get('message');
+//
+//        return view('admin.createform', $configuration);
     }
 
     public function adminStore()
@@ -50,7 +50,7 @@ class VRResourcesController extends Controller
 
         $message = ['message' => trans('Record added successfully')];
 
-        return redirect()->route('app.resources.create')->with($message);
+        return redirect()->route('app.resources.index')->with($message);
     }
 
     public function adminShow($id)
