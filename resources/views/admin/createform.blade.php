@@ -61,45 +61,6 @@
                         {!! Form::file('files[]', array('multiple'=>true)) !!}<br/>
                     </div>
 
-
-
-{{--Cover img dropdown. Display dropdown fields for the cover img selection from VRResources--}}
-                {{--## substr($field, -4) == 's_id' ## translates to ## $field == 'cover_image_id' ##--}}
-
-                {{--@elseif($field == 'cover_image_id' and $tableName == 'pages')--}}
-                    {{--@if($dropdown[$field] != null)--}}
-                        {{--<div class="form-group">--}}
-                            {{--{!! Form::label($field, 'Choose ' . ucfirst(substr($field, 0, -3) . ' from database:')) !!}--}}
-                            {{--{{Form::select($field,[null=>'Please Select'] + $dropdown[$field],'', ['class' => 'form-control'])}}<br/>--}}
-                        {{--</div>--}}
-                    {{--@endif--}}
-
-{{--Cover img button. Display the file select button--}}
-
-                    {{--@if($tableName == 'pages')--}}
-                        {{--<div class="form-group">--}}
-                            {{--{!! Form::label($field, 'Upload ' . ucfirst(substr($field, 0, -3) . ':')) !!}<br/>--}}
-                            {{--{!! Form::file('image')!!}<br/>--}}
-                        {{--</div><br/>--}}
-                    {{--@endif--}}
-
-                    {{--@elseif(isset($dropdown) and substr($field, -3) == '_id')--}}
-                    {{--<div class="form-group">--}}
-                      {{--{!! Form::label($field, 'Choose ' . ucfirst(substr($field, 0, -4) . ':')) !!}--}}
-                      {{--{{Form::select($field, $dropdown[$field], '', ['class' => 'form-control'])}}<br/>--}}
-                    {{--</div>--}}
-
-{{--Multi button 1. Display media upload button for multiple files IN PAGES CREATE. Used in 'create new page' and also 'create --}}
-                    {{--<div class="form-group">--}}
-                        {{--{!! Form::label('images', 'Upload Media files:' ) !!}<br>--}}
-                        {{--{!! Form::file('images[]', array('multiple'=>true)) !!}<br/>--}}
-                    {{--</div>--}}
-{{--Multi button 2.Display media upload button for multiple files in 'create new resource'--}}
-                {{--@elseif((substr($field, -4) == 'e_id') || ($field == 'path' and $tableName == 'resources'))--}}
-                    {{--<div class="form-group">--}}
-                        {{--{!! Form::file('images[]', array('multiple'=>true)) !!}<br/>--}}
-                    {{--</div>--}}
-
                 @elseif(isset($checkbox[$field]))
                         {!! Form::label($field, 'Pick ' . ucfirst($field . ':')) !!}<br/>
                 @foreach($checkbox[$field] as $key => $checkboxItem)
