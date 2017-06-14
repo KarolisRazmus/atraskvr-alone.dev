@@ -4,36 +4,57 @@
 
 @section('content')
 
-        <br>
+    <br>
     @if(isset($error))
             <div class="alert alert-danger">
                 <strong>{{ $error['message'] }}</strong>
             </div>
+                @if($tableName == 'resources')
+                    {!! Form::open(['url' => route('app.' . $tableName . '.store'), 'files' => true]) !!}
+
+                    <label class="btn btn-primary btn-sm btn-file">
+                        Create new resource <input type="file" multiple onchange="this.form.submit()" name="files[]" hidden>
+                    </label>
+
+                    {!! Form::close() !!}
+                @else
             <a style="margin-bottom: 50px" class="btn btn-primary btn-sm" href="{{ route('app.' . $tableName . '.create') }}">Create new
                 @if(substr($tableName, -3) == 'ies')
                     {{substr(str_replace('_', ' ',$tableName), 0, -3).'y'}}
                 @else
                     {{substr(str_replace('_', ' ',$tableName), 0, -1)}}
                 @endif            </a>
+                @endif
             <br>
         @endif
-        @if(!isset($error))
-            @if(isset($comment))
-                <div class="alert alert-success">
-                    <strong>{{ $comment['message'] }}</strong>
-                </div>
-            @endif
-                @if(isset($message))
-                    <div class="alert alert-warning">
-                        <strong>{{ $message }}</strong>
-                    </div>
-                @endif
-                         <a style="margin-bottom: 50px" class="btn btn-primary btn-sm" href="{{ route('app.' . $tableName . '.create') }}">Create new
-                             @if(substr($tableName, -3) == 'ies')
-                                 {{substr(str_replace('_', ' ',$tableName), 0, -3).'y'}}
-                             @else
-                                 {{substr(str_replace('_', ' ',$tableName), 0, -1)}}
-                             @endif                         </a>
+    @if(!isset($error))
+        @if(isset($comment))
+            <div class="alert alert-success">
+                <strong>{{ $comment['message'] }}</strong>
+            </div>
+        @endif
+        @if(isset($message))
+            <div class="alert alert-warning">
+                <strong>{{ $message }}</strong>
+            </div>
+        @endif
+        @if($tableName == 'resources')
+            {!! Form::open(['url' => route('app.' . $tableName . '.store'), 'files' => true]) !!}
+
+            <label class="btn btn-primary btn-sm btn-file">
+                Create new resource <input type="file" multiple onchange="this.form.submit()" name="files[]" hidden>
+            </label>
+
+            {!! Form::close() !!}
+        @else
+            <a style="margin-bottom: 50px" class="btn btn-primary btn-sm" href="{{ route('app.' . $tableName . '.create') }}">Create new
+                @if(substr($tableName, -3) == 'ies')
+                    {{substr(str_replace('_', ' ',$tableName), 0, -3).'y'}}
+                @else
+                    {{substr(str_replace('_', ' ',$tableName), 0, -1)}}
+                @endif            </a>
+        @endif
+        <br>
             <table class="table table-hover">
                 <thead>
                 <tr>
@@ -56,10 +77,10 @@
                         @if(isset($translationExist))
                             <th>Translate</th>
                         @endif
-                        @if($tableName != 'resources')
                     <th>View</th>
-                        @endif
+                        @if($tableName != 'resources')
                     <th>Edit</th>
+                        @endif
                     <th>Delete</th>
                 </tr>
                 </thead>
