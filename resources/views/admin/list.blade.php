@@ -13,7 +13,7 @@
                     {!! Form::open(['url' => route('app.' . $tableName . '.store'), 'files' => true]) !!}
 
                     <label class="btn btn-primary btn-sm btn-file">
-                        Create new resource <input type="file" multiple onchange="this.form.submit()" name="files[]" hidden>
+                        <i class="fa fa-upload fm-sm" aria-hidden="true"></i> Create new resource <input type="file" multiple onchange="this.form.submit()" name="files[]" hidden>
                     </label>
 
                     {!! Form::close() !!}
@@ -42,7 +42,7 @@
             {!! Form::open(['url' => route('app.' . $tableName . '.store'), 'files' => true]) !!}
 
             <label class="btn btn-primary btn-sm btn-file">
-                Create new resource <input type="file" multiple onchange="this.form.submit()" name="files[]" hidden>
+                <i class="fa fa-upload fm-sm" aria-hidden="true"></i> Create new resource <input type="file" multiple onchange="this.form.submit()" name="files[]" hidden>
             </label>
 
             {!! Form::close() !!}
