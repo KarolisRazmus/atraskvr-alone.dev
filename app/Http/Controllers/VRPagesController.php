@@ -185,9 +185,16 @@ class VRPagesController extends Controller
             return view('admin.editform', $configuration);
         }
 
-        dd($data['filesToDelete']);
+        if(isset($data['filesToDelete'])) {
 
-//        reikia istrinti situos
+            if ( $data[ 'filesToDelete' ] != null ) {
+
+                foreach($data[ 'filesToDelete' ] as $fileToDelete ) {
+                    $resource_id = VRResources::where('path', '=', $fileToDelete)->get()->pluck('id');
+                    VRPagesResourcesConnections::where ( 'resources_id' , '=' , $resource_id[0] )->delete();
+                }
+            }
+        }
 
         if(isset($data['cover_image_id'])) {
 
@@ -240,14 +247,19 @@ class VRPagesController extends Controller
     public function adminDestroy($id)
     {
         if (VRPages::destroy($id) and VRPagesTranslations::where('pages_id', '=', $id)->delete() and VRPagesResourcesConnections::where('pages_id', '=', $id)->delete()) {
+
             return json_encode(["success" => true, "id" => $id]);
 
         } elseif (VRPages::destroy($id) and VRPagesTranslations::where('pages_id', '=', $id)->delete()) {
+
             return json_encode(["success" => true, "id" => $id]);
 
         } elseif (VRPages::destroy($id) and VRPagesResourcesConnections::where('pages_id', '=', $id)->delete()) {
+
             return json_encode(["success" => true, "id" => $id]);
+
         } elseif (VRPages::destroy($id)) {
+
             return json_encode(["success" => true, "id" => $id]);
         }
     }
