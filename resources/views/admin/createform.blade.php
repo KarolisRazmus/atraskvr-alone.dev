@@ -55,7 +55,7 @@
                             {!! Form::file($field)!!}
                         </div>
                     @endif
-                @elseif($field == 'files' or $field == 'path')
+                @elseif($field == 'files')
                     <br/><div class="form-group">
                         {!! Form::label('images', 'Upload files:' ) !!}<br>
                         {!! Form::file('files[]', array('multiple'=>true)) !!}<br/>
@@ -74,7 +74,7 @@
                         {!! Form::password($field, ['class' => 'form-control'])!!}<br/>
                     </div>
 
-                @elseif($field && $tableName != 'resources')
+                @elseif($field)
                     <div class="form-group">
                             {!! Form::label($field, 'Enter ' . ucfirst($field . ':')) !!}
                             {!! Form::text($field, '', ['class' => 'form-control'])!!}<br/>
