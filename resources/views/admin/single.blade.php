@@ -35,7 +35,7 @@
 
                     @if($key == 'path')
                         <td>cover image</td>
-                        <td><img src="{{asset($value)}}"></td>
+                        <td><img style="width:250px" src="{{asset($value)}}"></td>
                 </tr>
                 <tr>
                     <td>{{$key}}</td>
