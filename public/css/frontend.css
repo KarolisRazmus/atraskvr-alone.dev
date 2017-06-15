@@ -173,6 +173,12 @@ body {
 }
 
 .page_title_h2 {
+    margin: 5vw;
+    text-align: center;
+}
+
+.page_sub_title_h4 {
+
     text-align: center;
 }
 
