@@ -16,10 +16,13 @@ class FrontEndController extends Controller
      */
     public function index()
     {
+        $configuration['pages'] = VRPages::with(['resourcesConnections','category', 'cover_image_id', 'translation'])->get()->toArray();
 
 
-//        $configuration['menu'] = VRMenusTranslations::where('languages_id', 'lt')->get()->toArray();
-        $configuration['pages'] = VRPages::with('translations')->where('pages_categories_id', 'vr_categories_id')->get()->toArray();
+
+
+
+//        dd($configuration);
 
         return view('front-end.index', $configuration);
     }
