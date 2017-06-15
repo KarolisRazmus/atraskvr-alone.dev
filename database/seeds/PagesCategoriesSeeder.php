@@ -16,7 +16,8 @@ class PagesCategoriesSeeder extends Seeder
         {
             $list = [
                 ["id" => "without_categories_id", "name" => "Does not have a category"],
-                ["id" => "vr_categories_id", "name" => "virtualus_kambariai_kategorija"],
+                ["id" => "vr_categories_id", "name" => "Virtual room category"],
+                ["id" => "menu_categories_id", "name" => "Menu category"],
 
             ];
             DB::beginTransaction();
