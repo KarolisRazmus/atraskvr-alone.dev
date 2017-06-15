@@ -1,0 +1,194 @@
+body {
+    font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+}
+
+.navbar {
+
+    border: none;
+    background: #000000;
+    border-radius: 0;
+
+}
+
+.navbar .navbar-collapse ul li a {
+
+    color: #F0F0F0;
+    font-size: 14px;
+
+}
+
+.navbar .navbar-collapse ul li a:hover {
+
+    color: #FD7B52;
+
+}
+
+.navbar .navbar-collapse ul li a:focus {
+
+    color: #FD7B52;
+}
+
+
+.navbar-default .navbar-nav>.open>a,
+.navbar-default .navbar-nav>.open>a:focus,
+.navbar-default .navbar-nav>.open>a:hover {
+
+    color: #FD7B52;
+    background-color: #000000;
+
+}
+
+.dropdown-menu>li>a:hover {
+
+    background-color: #000000;
+
+}
+
+.dropdown-menu {
+    background-color: #000000;
+}
+
+
+.navbar .navbar-nav  {
+
+    display: inline-block;
+    float: none;
+}
+
+.navbar-collapse {
+    text-align: center;
+}
+
+.navbar-default .navbar-nav .open .dropdown-menu>li>a {
+    color: #F0F0F0;
+}
+
+.navbar-default .navbar-nav .open .dropdown-menu>li>a:hover {
+    color: #FD7B52;
+}
+
+.navbar-default .navbar-toggle {
+    color: #F0F0F0;
+    border-color: #F0F0F0;
+}
+
+.navbar-default .navbar-toggle:focus {
+
+    background-color: #000000;
+
+}
+
+.navbar-default .navbar-collapse, .navbar-default .navbar-form {
+    border-color: #000000;
+}
+
+.navbar {
+    margin-bottom: 0;
+    position: fixed;
+    width: 100%;
+    z-index: 500;
+
+}
+
+#part-1 {
+    height: 1073px;
+    background: url(../images/header.jpg) no-repeat center center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    -webkit-transition: height 1s;
+    position: relative;
+
+}
+
+#elektroMarkt {
+    height: 240px;
+    width: 265px;
+    background: url(../images/elektro_markt.png) no-repeat;
+    margin: 0 auto ;
+    background-position-y: -100px;
+
+
+}
+
+#elektroMarktLogo {
+
+    height: 150px;
+    width: 252px;
+    background: url("../images/elektro_markt_logo.png") no-repeat center center;
+    margin: 0 auto;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: contain;
+    background-position-y: +100px;
+
+}
+
+.logo-title {
+    margin: 0;
+    text-align: center;
+    color: #FF958B;
+    position: relative;
+    top: 95px;
+
+}
+
+#mainTitle {
+
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 7.5vw;
+    text-align: center;
+    text-transform: uppercase;
+    color: #f5f5f5;
+    text-shadow: 0 5px 8px rgba(88, 88, 88, 0.7);
+    transform: scale(1, 1.4);
+}
+
+#mainTitleDescription {
+
+    width: 369px;
+    background-color: #FD7B52;
+    color: white;
+    font-size: 17px;
+    margin: 5px auto 0;
+    padding: 10px 35px;
+    text-align: center;
+    letter-spacing: 1px;
+
+}
+
+
+.irregular-shape {
+
+    /*height: 500px;*/
+    /*position: absolute;*/
+    /*bottom: -240px;*/
+
+    background: url("../images/irregular_shape.png") no-repeat center center;
+    width: 100%;
+    left: 0;
+
+}
+
+.page_title_h2 {
+    text-align: center;
+}
+
+.sponsors_logos {
+
+    max-height: 100%;
+    max-width: 100%;
+    padding: 10%;
+
+
+}
+
+
+
+
+
+
+
+
