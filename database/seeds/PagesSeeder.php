@@ -16,16 +16,21 @@ class PagesSeeder extends Seeder
     {
         {
             $list = [
-                ["id" => Uuid::uuid4(), "name" => "The lab", "pages_categories_id" => "vr_categories_id"],
-                ["id" => Uuid::uuid4(), "name" => "Fruit ninja", "pages_categories_id" => "vr_categories_id"],
-                ["id" => Uuid::uuid4(), "name" => "Space pirate trainer", "pages_categories_id" => "vr_categories_id"],
-                ["id" => Uuid::uuid4(), "name" => "Tilt brush", "pages_categories_id" => "vr_categories_id"],
-                ["id" => Uuid::uuid4(), "name" => "Merry snowballs", "pages_categories_id" => "vr_categories_id"],
-                ["id" => Uuid::uuid4(), "name" => "Samsung irklavimas", "pages_categories_id" => "vr_categories_id"],
-                ["id" => Uuid::uuid4(), "name" => "KTU parasparnis", "pages_categories_id" => "vr_categories_id"],
-                ["id" => Uuid::uuid4(), "name" => "Hurl", "pages_categories_id" => "vr_categories_id"],
-                ["id" => Uuid::uuid4(), "name" => "Final goalie: football simulator", "pages_categories_id" => "vr_categories_id"],
-                ["id" => Uuid::uuid4(), "name" => "Project cars", "pages_categories_id" => "vr_categories_id"],
+                ["id" => Uuid::uuid4(), "name" => "The lab", "pages_categories_id" => "virtual_rooms_category_id"],
+                ["id" => Uuid::uuid4(), "name" => "Fruit ninja", "pages_categories_id" => "virtual_rooms_category_id"],
+                ["id" => Uuid::uuid4(), "name" => "Space pirate trainer", "pages_categories_id" => "virtual_rooms_category_id"],
+                ["id" => Uuid::uuid4(), "name" => "Tilt brush", "pages_categories_id" => "virtual_rooms_category_id"],
+                ["id" => Uuid::uuid4(), "name" => "Merry snowballs", "pages_categories_id" => "virtual_rooms_category_id"],
+                ["id" => Uuid::uuid4(), "name" => "Samsung irklavimas", "pages_categories_id" => "virtual_rooms_category_id"],
+                ["id" => Uuid::uuid4(), "name" => "KTU parasparnis", "pages_categories_id" => "virtual_rooms_category_id"],
+                ["id" => Uuid::uuid4(), "name" => "Hurl", "pages_categories_id" => "virtual_rooms_category_id"],
+                ["id" => Uuid::uuid4(), "name" => "Final goalie: football simulator", "pages_categories_id" => "virtual_rooms_category_id"],
+                ["id" => Uuid::uuid4(), "name" => "Project cars", "pages_categories_id" => "virtual_rooms_category_id"],
+                ["id" => Uuid::uuid4(), "name" => "Apie", "pages_categories_id" => "menu_category_id"],
+                ["id" => Uuid::uuid4(), "name" => "Virtualus kambariai", "pages_categories_id" => "menu_category_id"],
+                ["id" => Uuid::uuid4(), "name" => "Vieta ir laikas", "pages_categories_id" => "menu_category_id"],
+                ["id" => Uuid::uuid4(), "name" => "Bilietai", "pages_categories_id" => "menu_category_id"],
+                ["id" => Uuid::uuid4(), "name" => "Remejai", "pages_categories_id" => "menu_category_id"],
             ];
 
             DB::beginTransaction();
