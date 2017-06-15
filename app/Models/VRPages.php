@@ -11,7 +11,8 @@ class VRPages extends CoreModel
 
     public function category (  )
     {
-        return $this->hasOne(VRPagesCategories::class, 'id', 'pages_categories_id');
+        return $this->hasOne(VRPagesCategories::class, 'id', 'pages_categories_id')
+            ->with(['parent']);
     }
 
     public function cover_image_id (  )
@@ -25,18 +26,10 @@ class VRPages extends CoreModel
             ->with(['resource']);
     }
 
-
-
-
-
-
-
-
-
-
-    public function translations()
+    public function translation()
     {
-        return $this->hasMany(VRPagesTranslations::class, 'pages_id', 'id')->where('languages_id', 'lt');
+        return $this->hasOne(VRPagesTranslations::class, 'pages_id', 'id')->where('languages_id', 'lt');
     }
 
 }
+    //TODO reik pakeisti languages_id is 'lt' i locale, kad imtu kalba kurios reikia useriui
