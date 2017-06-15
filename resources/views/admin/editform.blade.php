@@ -35,7 +35,7 @@
                 @elseif(isset($dropdown) and $field == 'parent_id')
                     <div class="form-group">
                         {!! Form::label($field, 'Choose ' . ucfirst(substr($field, 0, -3) . ':')) !!}
-                        {{Form::select($field, $dropdown[$field], $record[$field], ['class' => 'form-control'])}}<br/>
+                        {{Form::select($field, [null=>'Please select '. substr(str_replace('_', ' ', $field), 0, -3)] + $dropdown[$field], $record[$field], ['class' => 'form-control'])}}<br/>
                     </div>
 
                 @elseif(isset($dropdown[$field]) and substr($field, -3) == '_id')
