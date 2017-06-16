@@ -3,6 +3,7 @@
 namespace App\Http;
 
 use App\Http\Middleware\CheckIfMember;
+use App\Http\Middleware\CheckLanguage;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -58,5 +59,6 @@ class Kernel extends HttpKernel
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'check-role-member' => CheckIfMember::class,
+        'check-language' => CheckLanguage::class,
     ];
 }

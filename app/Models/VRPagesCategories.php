@@ -13,4 +13,6 @@ class VRPagesCategories extends CoreModel
     {
         return $this->hasOne(VRPagesCategories::class, 'id', 'parent_id');
     }
+
+    //TODO pages hasMany
 }

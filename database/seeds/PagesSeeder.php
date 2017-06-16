@@ -30,7 +30,7 @@ class PagesSeeder extends Seeder
                 ["id" => Uuid::uuid4(), "name" => "Virtualus kambariai", "pages_categories_id" => "menu_category_id"],
                 ["id" => Uuid::uuid4(), "name" => "Vieta ir laikas", "pages_categories_id" => "menu_category_id"],
                 ["id" => Uuid::uuid4(), "name" => "Bilietai", "pages_categories_id" => "menu_category_id"],
-                ["id" => Uuid::uuid4(), "name" => "Remejai", "pages_categories_id" => "menu_category_id"],
+                ["id" => Uuid::uuid4(), "name" => "Remėjai", "pages_categories_id" => "menu_category_id"],
             ];
 
             DB::beginTransaction();

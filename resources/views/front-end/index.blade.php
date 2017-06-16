@@ -39,10 +39,6 @@
 
         <h2>Bilietai</h2>
 
-        @include('front-end.pages.buy')
-
-        <h2>Pirkti</h2>
-
         @include('front-end.pages.sponsors')
 
         {{--<h2>Remejai</h2>--}}

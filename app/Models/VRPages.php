@@ -28,8 +28,9 @@ class VRPages extends CoreModel
 
     public function translation()
     {
-        return $this->hasOne(VRPagesTranslations::class, 'pages_id', 'id')->where('languages_id', 'lt');
+        return $this->hasOne(VRPagesTranslations::class, 'pages_id', 'id')->where('languages_id', app()->getLocale());
     }
 
 }
     //TODO reik pakeisti languages_id is 'lt' i locale, kad imtu kalba kurios reikia useriui
+

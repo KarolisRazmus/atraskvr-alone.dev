@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\VRMenusTranslations;
 use App\Models\VRPages;
+use App\Models\VRPagesCategories;
 use App\Models\VRPagesTranslations;
 use Illuminate\Http\Request;
 
@@ -16,13 +17,11 @@ class FrontEndController extends Controller
      */
     public function index()
     {
-        $configuration['pages'] = VRPages::with(['resourcesConnections','category', 'cover_image_id', 'translation'])->get()->toArray();
+        //$configuration['pages'] = VRPages::with(['resourcesConnections','category', 'cover_image_id', 'translation'])->get()->toArray();
 
+        $configuration['pages'] = VRPagesCategories::with('pages')->get()->toArray();
 
-
-
-
-//        dd($configuration);
+        dd($configuration);
 
         return view('front-end.index', $configuration);
     }
