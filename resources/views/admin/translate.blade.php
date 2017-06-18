@@ -21,7 +21,16 @@
                 <tr>
                     <th>Key</th>
                     @foreach($languages_names as $key => $value)
-                        <th>{{$value}} value</th>
+                        <th>
+                            {!! Form::open(['url' => route('app.' . $tableName . '_translations.create', $record['id'])]) !!}
+
+                            {{$value}} value
+                            <br>
+                            {{Form::checkbox('create' . $key, $key)}}
+                            {{Form::label($key, 'Create / Update')}}<br/>
+                            {{Form::checkbox('delete' . $key, $key)}}
+                            {{Form::label($key, 'Delete')}}<br/>
+                        </th>
                     @endforeach
                 </tr>
                 </thead>
@@ -29,8 +38,6 @@
                 @foreach($fields_translations as $key => $field_value)
                     <tr>
                         <td>{{$field_value}}</td>
-
-                        {!! Form::open(['url' => route('app.' . $tableName . '_translations.create', $record['id'])]) !!}
 
                         @foreach($languages as $key => $language)
 
@@ -98,6 +105,7 @@
             </table>
 
         {!! Form::submit('Create / Update' , ['class' => 'btn btn-success']) !!}
+        {!! Form::submit('Delete' , ['class' => 'btn btn-danger']) !!}
         <a class="btn btn-primary" href="{{ route('app.' . $tableName . '.index') }}">{{str_replace('_', ' ', ucfirst($tableName))}} list</a>
 
         {!! Form::close() !!}
