@@ -9,13 +9,17 @@ class VRPages extends CoreModel
 
     protected $fillable = ['id', 'name', 'pages_categories_id', 'cover_image_id'];
 
+
+
+
+
     public function category (  )
     {
         return $this->hasOne(VRPagesCategories::class, 'id', 'pages_categories_id')
             ->with(['parent']);
     }
 
-    public function cover_image_id (  )
+    public function cover_image (  )
     {
         return $this->hasOne(VRResources::class, 'id', 'cover_image_id');
     }
