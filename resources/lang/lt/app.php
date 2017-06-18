@@ -15,5 +15,6 @@ return [
     'tickets_title' => 'Bilietai',
     'time_and_place_title' => 'Vieta ir laikas',
     'virtual_rooms_title' => 'Virtualus kambariai',
+    'more_info' => 'Sužinoti daugiau',
 
 ];

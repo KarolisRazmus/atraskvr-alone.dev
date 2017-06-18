@@ -15,5 +15,6 @@ return [
    'tickets_title' => 'Tickets',
    'time_and_place_title' => 'Time and place',
    'virtual_rooms_title' => 'Virtual rooms',
+   'more_info' => 'More info',
 
 ];
