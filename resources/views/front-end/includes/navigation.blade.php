@@ -13,93 +13,101 @@
 
             <ul class="nav navbar-nav">
 
-                <li><a href="#{{trans('app.about_title')}}">{{trans('app.about_title')}}</a></li>
+                <li><a href="#{{strtolower(str_replace(" ", "-", trans('app.about_title')))}}">{{trans('app.about_title')}}</a></li>
 
-                @foreach($pages as $page)
+                    @foreach($categories as $category)
 
-                    @if($page['pages_categories_id'] == 'virtual_rooms_category_id')
+                        @if($category['id'] == 'virtual_rooms_category_id' and $category['pages'] != [])
 
-                        @if($page['translation']['languages_id'] == app()->getLocale())
+                            @foreach($category['pages'] as $experience)
 
-                            <li class="dropdown">
+                                @if($experience['translation'] != [] and isset($experience['translation']['title']))
 
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{trans('app.virtual_rooms_title')}}<span class="caret"></span></a>
+                                    <li class="dropdown">
 
-                                @foreach($pages as $dropdownItem)
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{trans('app.virtual_rooms_title')}}<span class="caret"></span></a>
 
-                                    @if($dropdownItem['pages_categories_id'] == 'virtual_rooms_category_id')
+                                        <ul class="dropdown-menu">
 
-                                        @if($dropdownItem['translation']['languages_id'] == app()->getLocale())
+                                            @foreach($category['pages'] as $dropdownItem)
 
-                                            <ul class="dropdown-menu">
+                                                @if($dropdownItem['translation'] != [] and isset($dropdownItem['translation']['title']))
 
-                                                <li>
+                                                    @if(($dropdownItem['translation']['description_long']) == 'translation value')
 
-                                                    @if($dropdownItem['translation']['description_long'] == 'translation value')
+                                                        <li>
 
-                                                        <a href="#{{trans('app.virtual_rooms_title')}}">
+                                                        <a href="#{{strtolower(str_replace(" ", "-", trans('app.virtual_rooms_title')))}}">
 
-                                                            @else
+                                                            {{$dropdownItem['translation']['title']}}</a>
+
+                                                        </li>
+
+                                                    @else
+
+                                                        <li>
 
                                                         <a href="{{app()->getLocale(). "/" . $dropdownItem['translation']['slug']}}">
 
+                                                            {{$dropdownItem['translation']['title']}}</a>
+
+                                                        </li>
+
                                                     @endif
 
-                                                        {{$dropdownItem['translation']['title']}}</a></a>
+                                                @endif
 
-                                                </li>
+                                            @endforeach
 
-                                            </ul>
+                                        </ul>
 
-                                        @endif
+                                    @break
+{{--TODO jei nera isverstu experiencu title ir short description tai nereik isvis virtual rooms menujyje:)--}}
+                                {{--@else--}}
 
-                                    @endif
+                                    {{--@if(end($category['pages']) == $experience)--}}
 
-                                @endforeach
+                                    {{--<li><a href="#{{trans('app.virtual_rooms_title')}}">{{trans('app.virtual_rooms_title')}}</a></li>--}}
 
-                            </li>
+                                    {{--@endif--}}
+
+                                @endif
+
+                            @endforeach
 
                         @endif
+
+                    @endforeach
+
+                <li><a href="#{{strtolower(str_replace(" ", "-", trans('app.time_and_place_title')))}}">{{trans('app.time_and_place_title')}}</a></li>
+
+                <li><a href="#{{strtolower(str_replace(" ", "-", trans('app.tickets_title')))}}">{{trans('app.tickets_title')}}</a></li>
+
+                <li><a href="#{{strtolower(str_replace(" ", "-", trans('app.sponsors_title')))}}">{{trans('app.sponsors_title')}}</a></li>
+
+                @foreach($categories as $category)
+
+                    @if($category['id'] == 'menu_category_id' and $category['pages'] != [])
+
+                        @foreach($category['pages'] as $page)
+
+                            @if(isset($page['translation']['description_long']) and isset($page['translation']['title']) and isset($page['translation']['description_long']))
+
+                                @if(array_search($page['translation']['title'], [trans('app.about_title'), trans('app.virtual_rooms_title'), trans('app.time_and_place_title'), trans('app.tickets_title'), trans('app.sponsors_title')]) == false)
+
+                                    <li><a href="{{app()->getLocale(). "/" . $page['translation']['slug']}}">
+
+                                    {{$page['translation']['title']}}</a></li>
+
+                                @endif
+
+                            @endif
+
+                        @endforeach
 
                     @endif
 
                 @endforeach
-
-                <li><a href="#{{trans('app.time_and_place_title')}}">{{trans('app.time_and_place_title')}}</a></li>
-
-                <li><a href="#{{trans('app.tickets_title')}}">{{trans('app.tickets_title')}}</a></li>
-
-                <li><a href="#{{trans('app.sponsors_title')}}">{{trans('app.sponsors_title')}}</a></li>
-
-                {{--@foreach($pages as $page)--}}
-
-                    {{--@if($page['pages_categories_id'] == 'menu_category_id')--}}
-
-                        {{--@if($page['translation']['languages_id'] == app()->getLocale())--}}
-
-                            {{--@if(array_search($page['name'], [trans('app.about_title'), trans('app.virtual_rooms_title'), trans('app.time_and_place_title'), trans('app.tickets_title'), trans('app.sponsors_title')]) == false)--}}
-
-                                {{--<li>--}}
-
-                                    {{--@if($page['translation']['description_long'] == 'translation value')--}}
-
-                                        {{--<a href="#{{$page['translation']['title']}}">--}}
-
-                                            {{--@else--}}
-
-                                        {{--<a href="{{app()->getLocale(). "/" . $page['translation']['slug']}}">--}}
-
-                                    {{--@endif--}}
-
-                                        {{--{{$page['translation']['title']}}</a></a></li>--}}
-
-                            {{--@endif--}}
-
-                        {{--@endif--}}
-
-                    {{--@endif--}}
-
-                {{--@endforeach--}}
 
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
