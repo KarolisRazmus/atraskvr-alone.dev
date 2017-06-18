@@ -14,5 +14,9 @@ class VRPagesCategories extends CoreModel
         return $this->hasOne(VRPagesCategories::class, 'id', 'parent_id');
     }
 
-    //TODO pages hasMany
+    public function pages (  )
+    {
+        return $this->hasMany(VRPages::class, 'pages_categories_id', 'id')
+            ->with(['translation'])->with(['cover_image']);
+    }
 }
