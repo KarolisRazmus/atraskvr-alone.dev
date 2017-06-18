@@ -86,7 +86,7 @@ body {
     margin-bottom: 0;
     position: fixed;
     width: 100%;
-    z-index: 500;
+    z-index: 5;
 
 }
 
@@ -107,7 +107,7 @@ body {
     width: 265px;
     background: url(../images/elektro_markt.png) no-repeat;
     margin: 0 auto ;
-    background-position-y: -100px;
+    background-position-y:-100px;
 
 
 }
@@ -138,7 +138,7 @@ body {
 #mainTitle {
 
     font-family: 'Nunito Sans', sans-serif;
-    font-size: 7.5vw;
+    font-size: 8.5vw;
     text-align: center;
     text-transform: uppercase;
     color: #f5f5f5;
@@ -164,11 +164,9 @@ body {
     /*height: 500px;*/
     /*position: absolute;*/
     /*bottom: -240px;*/
-
-    background: url("../images/irregular_shape.png") no-repeat center center;
+    /*background: url("../images/irregular_shape.png") no-repeat center center;*/
     width: 100%;
     left: 0;
-
 }
 
 .page_title_h2 {
@@ -176,18 +174,31 @@ body {
     text-align: center;
 }
 
-.page_sub_title_h4 {
+#bg-image-orange {
+    /*background: url("../images/orange_background.png") no-repeat center center;*/
+    /*width: 100%;*/
+}
 
-    text-align: center;
+.virtual-rooms-experiences {
+    margin-bottom: 4rem;
+}
+
+#virtual-room-img {
+    width: 300px;
+    height: 300px;
+}
+
+#map {
+    height: 300px;
+
 }
 
 .sponsors_logos {
-
     max-height: 100%;
     max-width: 100%;
     padding: 10%;
-
 }
+
 
 
 

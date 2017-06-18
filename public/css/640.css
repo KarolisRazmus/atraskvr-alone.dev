@@ -27,5 +27,9 @@
         width: 100px;
     }
 
+    #virtual-room-img {
+        width: 150px;
+        height: 150px;
+    }
 
 }
