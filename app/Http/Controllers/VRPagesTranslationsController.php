@@ -12,93 +12,103 @@ use Illuminate\Support\Facades\Route;
 
 class VRPagesTranslationsController extends Controller
 {
-    public function adminCreate($id)
+    public
+    function adminCreate ( $id )
     {
-        $dataFromModel = new VRPages();
-        $configuration['fields'] = $dataFromModel->getFillable();
-        $configuration['tableName'] = $dataFromModel->getTableName();
+        $configuration = (new VRPages())->getFillableAndTableName ();
 
-        $configuration['record'] = VRPages::find($id)->toArray();
+        $configuration[ 'record' ] = VRPages::find ( $id )->toArray ();
 
         $dataFromModel2 = new VRPagesTranslations();
-        $configuration['fields_translations'] = $dataFromModel2->getFillable();
-        unset($configuration['fields_translations'][1]);
-        unset($configuration['fields_translations'][2]);
-        unset($configuration['fields_translations'][6]);
+        $configuration[ 'fields_translations' ] = $dataFromModel2->getFillable ();
+        unset( $configuration[ 'fields_translations' ][ 1 ] );
+        unset( $configuration[ 'fields_translations' ][ 2 ] );
+        unset( $configuration[ 'fields_translations' ][ 6 ] );
 
-        $configuration['translations'] = VRPagesTranslations::all()->where('pages_id', '=', $id)->toArray();
+        $configuration[ 'translations' ] = VRPagesTranslations::all ()->where ( 'pages_id' , '=' , $id )->toArray ();
 
-        $configuration['languages_names'] = VRLanguages::all()->pluck('name', 'id')->toArray();
-        $configuration['languages'] = VRLanguages::all()->pluck('id')->toArray();
+        $configuration[ 'languages_names' ] = VRLanguages::all ()->pluck ( 'name' , 'id' )->toArray ();
+        $configuration[ 'languages' ] = VRLanguages::all ()->pluck ( 'id' )->toArray ();
 
-        return view('admin.translate', $configuration);
+        return view ( 'admin.translate' , $configuration );
     }
 
-    public function adminStore($id)
+    public
+    function adminStore ( $id )
     {
-        $data = request()->all();
+        $data = request ()->all ();
 
         $dataFromModel = new VRPagesTranslations();
-        $fields = $dataFromModel->getFillable();
+        $fields = $dataFromModel->getFillable ();
 
-        unset($fields[1]);
-        unset($fields[2]);
-        unset($fields[6]);
+        unset( $fields[ 1 ] );
+        unset( $fields[ 2 ] );
+        unset( $fields[ 6 ] );
 
-        $languages = VRLanguages::all()->pluck('name', 'id')->toArray();
+        $languages = VRLanguages::all ()->pluck ( 'name' , 'id' )->toArray ();
 
         $fullComment = '';
 
-        foreach ($languages as $language_id => $name)
-        {
-            foreach ($fields as $field)
+        foreach ( $languages as $language_id => $name ) {
+
+            $message = null;
+
+            if(isset($data[ 'delete' . $language_id ]))
             {
-                $key = $field . "_" . $language_id;
-                $record[$field] = $data[$key];
-
-                if($record[$field] == $record['title'])
-                {
-                    $record['slug'] = str_slug($record[$field], '-');
-                }
-
-                if(!$record[$field]){
-                    $comment[$name] = $name . ' translation fields not full filed, the operation aborted';
-                }
+                VRPagesTranslations::where('pages_id', '=', $id)->where('languages_id', '=', $language_id)->delete();
             }
 
-            $record['pages_id'] = $id;
-            $record['languages_id'] = $language_id;
+            elseif (isset($data[ 'create' . $language_id ])) {
 
-            if(!isset($comment[$name]))
-            {
-                DB::beginTransaction();
-                try {
-                    $recordExist = DB::table('vr_pages_translations')
-                        ->wherePages_idAndLanguages_id($id, $language_id)
-                        ->first();
+                foreach ( $fields as $field ) {
+                    $key = $field . "_" . $language_id;
+                    $record[ $field ] = $data[ $key ];
 
-                    if(!$recordExist) {
-                        VRPagesTranslations::create($record);
-                        $comment[$name] = $name . ' translation added to database';
-                    } elseif ($recordExist) {
-                        DB::table('vr_pages_translations')
-                            ->wherePages_idAndLanguages_id($id, $language_id)
-                            ->update($record);
-                        $comment[$name] = $name . ' translation updated';
+                    if ( $record[ $field ] == $record[ 'title' ] ) {
+                        $record[ 'slug' ] = str_slug ( $record[ $field ] , '-' );
                     }
 
-                } catch(Exception $e) {
-                    DB::rollback();
-                    throw new Exception($e);
+                    if ( !$record[ $field ] ) {
+                        $comment[ $name ] = $name . ' translation fields not full filed, the operation aborted';
+                    }
                 }
-                DB::commit();
+
+                $record[ 'pages_id' ] = $id;
+                $record[ 'languages_id' ] = $language_id;
+
+                if ( !isset( $comment[ $name ] ) ) {
+                    DB::beginTransaction ();
+                    try {
+                        $recordExist = DB::table ( 'vr_pages_translations' )
+                            ->wherePages_idAndLanguages_id ( $id , $language_id )
+                            ->first ();
+
+                        if ( !$recordExist ) {
+                            VRPagesTranslations::create ( $record );
+                            $comment[ $name ] = $name . ' translation added to database';
+                        } elseif ( $recordExist ) {
+                            DB::table ( 'vr_pages_translations' )
+                                ->wherePages_idAndLanguages_id ( $id , $language_id )
+                                ->update ( $record );
+                            $comment[ $name ] = $name . ' translation updated';
+                        }
+
+                    } catch (Exception $e) {
+                        DB::rollback ();
+                        throw new Exception( $e );
+                    }
+                    DB::commit ();
+                }
+
+                $fullComment = $fullComment . $comment[ $name ] . '. ';
+
+                $message = [ 'message' => $fullComment ];
+
             }
 
-            $fullComment = $fullComment . $comment[$name] .'. ';
-
-            $message = ['message' => $fullComment];
         }
 
-        return redirect()->route('app.pages.index')->with($message);
+        return redirect ()->route ( 'app.pages.index' )->with ( $message );
     }
+
 }
