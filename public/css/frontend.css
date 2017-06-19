@@ -148,15 +148,20 @@ body {
 
 #mainTitleDescription {
 
-    width: 369px;
-    background-color: #FD7B52;
-    color: white;
-    font-size: 17px;
-    margin: 5px auto 0;
-    padding: 10px 35px;
+    width: 100%;
+    /*background-color: #FD7B52;*/
+    /*color: white;*/
+    /*font-size: 17px;*/
+    /*margin: 5px auto 0;*/
+    margin: auto ;
+    /*padding: 10px 35px;*/
     text-align: center;
-    letter-spacing: 1px;
+    /*letter-spacing: 1px;*/
 
+}
+
+#cta {
+    background-color: black;
 }
 
 .irregular-shape {

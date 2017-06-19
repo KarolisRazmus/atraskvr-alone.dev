@@ -17,7 +17,7 @@
 
             </div>
 
-            <div id="mainTitleDescription">{{trans('app.header_description')}}</div>
+            @include('front-end.pages.reservation')
 
         </div>
 
@@ -25,23 +25,15 @@
 
         @include('front-end.pages.about')
 
-        <h2>Apie</h2>
-
         @include('front-end.pages.virtual_rooms')
-
-        <h2>Virtualus kambariai</h2>
 
         @include('front-end.pages.time_and_place')
 
-        <h2>Vieta ir laikas</h2>
-
         @include('front-end.pages.tickets')
 
-        <h2>Bilietai</h2>
+        {{--<h2>Bilietai</h2>--}}
 
         @include('front-end.pages.sponsors')
-
-        {{--<h2>Remejai</h2>--}}
 
 @endsection
 

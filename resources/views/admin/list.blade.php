@@ -114,6 +114,12 @@
                                     @else
                                         <td></td>
                                     @endif
+                                @elseif($key_data == $value and $key_data == 'time')
+                                    <td><ul>
+                                            @foreach($value_data as $time)
+                                                <li>{{$time}}</li>
+                                            @endforeach
+                                    </ul></td>
                                 @elseif($key_data == $value)
                                        <td>{{$value_data}}</td>
                                 @endif

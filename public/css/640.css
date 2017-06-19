@@ -5,8 +5,8 @@
 
     #mainTitleDescription {
         margin-top: 35%;
-        width: 300px;
-        font-size: 10px;
+        width: 100%;
+        /*font-size: 10px;*/
     }
 
     #elektroMarkt {

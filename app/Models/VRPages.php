@@ -12,7 +12,6 @@ class VRPages extends CoreModel
 
 
 
-
     public function category (  )
     {
         return $this->hasOne(VRPagesCategories::class, 'id', 'pages_categories_id')
@@ -35,6 +34,10 @@ class VRPages extends CoreModel
         return $this->hasOne(VRPagesTranslations::class, 'pages_id', 'id')->where('languages_id', app()->getLocale());
     }
 
+    public function translations()
+    {
+        return $this->hasOne(VRPagesTranslations::class, 'pages_id', 'id')->where('languages_id', app()->getLocale());
+    }
+
 }
-    //TODO reik pakeisti languages_id is 'lt' i locale, kad imtu kalba kurios reikia useriui
 

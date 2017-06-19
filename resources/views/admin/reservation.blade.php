@@ -6,12 +6,17 @@
 
 
 
-    <div class="container">
         <nav aria-label="...">
             <ul class="pagination pagination-lg justify-content-center">
 
 
-                @foreach($days as $day)
+                @foreach($order_days as $key => $day)
+
+                    @if($key % 7 == 0)
+
+                        <br>
+
+                    @endif
 
                     <li class="page-item
 
@@ -53,24 +58,22 @@
 
                     @endif
 
-
                 @endif
 
-                @foreach($days as $day)
 
 
+
+                @foreach($order_days as $day)
 
                     @if($day == $date_from_url)
 
-
-
                         <h1 class="display-4">{{$day}}</h1>
-                        @if(isset($experiences))
 
+                            @foreach($categories as $category)
 
+                                @if($category['id'] == 'virtual_rooms_category_id' and $category['pages'] != [])
 
-
-                            @foreach($experiences as $experience)
+                                    @foreach($category['pages'] as $experience)
 
 
 
@@ -78,24 +81,22 @@
                                     <div class="card-header" role="tab" id="headingOne">
                                         <h5 class="mb-0">
                                             <a data-toggle="collapse" data-parent="#accordion"
-                                               href="#{{str_replace(' ', '_', $experience['translations'][0]['title'])}}"
+                                               href="#{{$experience['translation']['slug']}}"
                                                aria-expanded="true"
-                                               aria-controls="{{str_replace(' ', '_', $experience['translations'][0]['title'])}}">
-                                                {{$experience['translations'][0]['title']}}
+                                               aria-controls="{{$experience['translation']['slug']}}">
+                                                {{$experience['translation']['title']}}
                                             </a>
                                         </h5>
                                     </div>
-                                    <div id="{{str_replace(' ', '_', $experience['translations'][0]['title'])}}"
+
+
+                                    <div id="{{$experience['translation']['slug']}}"
                                          class="collapse" role="tabpanel" aria-labelledby="headingOne">
                                         <div class="card-block">
 
-
-
                                             @if($day == $today)
 
-
-
-                                                @if(isset($disabledTimes))
+                                                @if($disabledTimes != [])
 
                                                     @foreach($disabledTimes as $key => $value)
 
@@ -129,12 +130,13 @@
                                                     <input type="checkbox" name="{{$experience['id'] . '[]'}}"
                                                            value="{{$day . ' ' . $value}}"
 
-                                                    @if(isset($reservations))
+                                                    @if($reservations != [])
+
                                                         @foreach($reservations as $reservation)
 
                                                             @foreach($reservation['time'] as $time)
 
-                                                                @if($time == $day . ' ' . $value && $experience['id'] == $reservation['pages_id'])
+                                                                @if($time == $day . ' ' . $value and $experience['id'] == $reservation['pages_id'])
 
                                                                     {{'disabled'}}
 
@@ -154,8 +156,10 @@
 
 
 
+
                                             @elseif($day != $today)
-                                                @foreach($times as $key => $value)
+
+                                                @foreach($shop_working_times as $key => $value)
 
                                                     @if($key % 6 == 0)
 
@@ -166,12 +170,13 @@
                                                     <input type="checkbox" name="{{$experience['id'] . '[]'}}"
                                                            value="{{$day . ' ' . $value}}"
 
-                                                    @if(isset($reservations))
+                                                    @if($reservations != [])
+
                                                         @foreach($reservations as $reservation)
 
                                                             @foreach($reservation['time'] as $time)
 
-                                                                @if($time == $day . ' ' . $value && $experience['id'] == $reservation['pages_id'])
+                                                                @if($time == $day . ' ' . $value and $experience['id'] == $reservation['pages_id'])
 
                                                                     {{'disabled'}}
 
@@ -190,8 +195,10 @@
                                         </div>
                                     </div>
                                 </div>
-                            @endforeach
-                        @endif
+
+                              @endforeach
+                          @endif
+                        @endforeach
                     @endif
                 @endforeach
 
@@ -202,7 +209,7 @@
             <input class="btn btn-outline-primary submit-button" type="submit">
         </form>
 
-    </div>
+
 
 
 @endsection

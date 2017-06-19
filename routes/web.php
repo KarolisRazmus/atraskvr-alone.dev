@@ -19,7 +19,7 @@ Route::get('/dashboard', function () {
     return view('admin.main');
 });
 
-Route::get('/loginn', function () {
+Route::get('/login', function () {
     return view('login');
 });
 

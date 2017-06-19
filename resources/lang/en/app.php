@@ -6,6 +6,7 @@ return [
    'main_title' => 'Discover VR',
    'header_description' => 'Pasmatry VR vdrugymi glazamy (English)',
    'language' => 'Language',
+   'cta_reservation' => 'Register and try VR',
    'sponsors_title' => 'Sponsors',
    'sponsors_inspire' => 'Inspires',
    'sponsors_inform' => 'Informs',

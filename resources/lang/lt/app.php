@@ -4,8 +4,9 @@ return [
 
     'inspired_by' => 'Parodą įkvepia: ',
     'main_title' => 'Atrask VR',
-    'header_description' => 'Pamatyk pasaulį kitomis akimis. Virtualios realybės patirčių paroda!',
+    'header_description' => 'Pamatyk pasaulį kitomis akimis!',
     'language' => 'Kalba',
+    'cta_reservation' => 'Rezervuokite laika ir isbandykite VR',
     'sponsors_title' => 'Remėjai',
     'sponsors_inspire' => 'Įkvepia',
     'sponsors_inform' => 'Informuoja',

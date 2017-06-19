@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\VRMenusTranslations;
 use App\Models\VRPages;
 use App\Models\VRPagesCategories;
 use App\Models\VRPagesTranslations;
@@ -15,10 +14,9 @@ class FrontEndController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function index()
     {
-//        $configuration['pages'] = VRPages::with(['resourcesConnections','category', 'cover_image_id', 'translation'])->get()->toArray();
-
         $configuration['categories'] = VRPagesCategories::with(['pages'])->get()->toArray();
 
 //        dd($configuration);
